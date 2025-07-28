@@ -1,0 +1,332 @@
+{% include 'header.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About | Sandhya Sharma - Full Stack Developer</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #6a0dad, #00ff9d);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .about-section {
+      position: relative;
+      min-height: 100vh;
+      padding-top: 80px;
+      display: flex;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .about-section::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 0;
+    }
+
+    .about-section .container {
+      position: relative;
+      z-index: 2;
+      color: white;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 30px;
+      padding-right: 10px;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 40px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+      transition: transform 0.4s ease;
+      margin-left: 0;
+      text-align: left;
+      max-width: 700px;
+    }
+
+    .glass-card:hover {
+      transform: scale(1.02);
+    }
+
+    .about-section h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      animation: slideInLeft 1s ease forwards;
+      color: #00ffe7;
+      text-shadow: 2px 2px #000;
+    }
+
+    .about-section p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #f1f1f1;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .about-section p:nth-of-type(2) {
+      animation-delay: 0.5s;
+    }
+
+    .highlight-name {
+      font-weight: bold;
+      color: #00ccff;
+      font-family: 'Segoe UI', sans-serif;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 2px #004466;
+    }
+
+    .highlight-role {
+      background: linear-gradient(to right, #00e0ff, #00ff6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+      text-shadow: 0 0 3px rgba(0,255,200,0.4), 0 0 6px rgba(0,255,200,0.2);
+    }
+
+    @keyframes slideInLeft {
+      0% { opacity: 0; transform: translateX(-60px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Profile Image */
+    .profile-img {
+      width: 100%;
+      max-width: 200px;    /* 👈 smaller size */
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .profile-img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      .about-section {
+        padding-top: 80px;
+        text-align: center;
+      }
+      .profile-img {
+        max-width: 170px; /* 👈 even smaller on mobile */
+        margin-bottom: 20px;
+      }
+      .glass-card {
+        padding: 20px;
+      }
+    }
+
+    /* AI Button */
+    .ai-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      padding: 16px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 15px rgba(0,255,255,0.6);
+      border: 2px solid #00ffff;
+      z-index: 999;
+      cursor: pointer;
+    }
+
+    .ai-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px rgba(0,255,255,1);
+    }
+
+    .ai-btn i {
+      font-size: 22px;
+      color: #00ffff;
+    }
+
+    .ai-btn::before {
+      content: "Ask me";
+      position: absolute;
+      left: -90px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.75);
+      color: #00ffff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      animation: pulse 1.5s infinite;
+    }
+
+    .ai-btn:hover::before {
+      opacity: 1;
+      transition-delay: 0s;
+    }
+
+    @keyframes pulse {
+      0% { transform: translateY(-50%) scale(1); }
+      50% { transform: translateY(-50%) scale(1.08); }
+      100% { transform: translateY(-50%) scale(1); }
+    }
+
+    /* Modal */
+    .modal-content {
+      background: rgba(0, 0, 0, 0.9);
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .modal iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+    }
+
+    .modal-header, .modal-footer {
+      border: none;
+    }
+
+    .modal-title {
+      color: #00ffcc;
+    }
+    /* Ask Me Label */
+.floating-label {
+  position: absolute;
+  right: 70px;
+  background-color: #00ffe5;
+  color: #000;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 255, 229, 0.4);
+}
+
+.floating-ai-btn:hover .floating-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+   .floating-ai-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(145deg, #1f1f1f, #2a2a2a);
+  color: #fff;
+  font-size: 24px;
+  padding: 15px;
+  border-radius: 50%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(0, 255, 229, 0.3);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.floating-ai-btn:hover {
+  background: #00ffe5;
+  color: #000;
+  transform: scale(1.08);
+  box-shadow: 0 0 15px #00ffe5;
+}
+ @media (max-width: 576px) {
+      .floating-ai-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- About Section -->
+<section class="about-section">
+  <div class="container">
+    <div class="row align-items-center justify-content-start">
+      <div class="col-md-5 text-center mb-4 mb-md-0">
+        <img src="{% static 'img/my.jpg' %}" class="img-fluid profile-img" alt="My Image">
+      </div>
+      <div class="col-md-7">
+        <div class="glass-card">
+          <h2>About Me</h2>
+          <p>Hello! I'm <span class="highlight-name">Sandhya Sharma</span>,<br> a passionate <span class="highlight-role">Full Stack Developer</span> skilled in front-end and back-end development. I craft clean, fast, and responsive web apps using <strong>HTML, CSS, JavaScript, React, Node.js, Django</strong>, and more.</p>
+          <p>I love turning ideas into reality through code. From concept to launch, I build scalable, user-focused solutions and constantly aim to grow my skills while contributing to awesome teams.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 🔘 Floating AI Button -->
+ <a href="{% url 'ai_assistant' %}" class="floating-ai-btn" data-bs-placement="left">
+  <span class="floating-label">Ask me</span>
+  <i class="bi bi-robot"></i>
+</a>
+
+
+
+<!-- Sound -->
+<audio id="clickSound" src="https://cdn.pixabay.com/audio/2023/03/01/audio_57f5c7a82a.mp3" preload="auto"></audio>
+<script>
+  function playSound() {
+    document.getElementById("clickSound").play();
+  }
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+{% include 'footer.html' %}
+<!-- Bootstrap JS -->
+</body>
+</html>
+

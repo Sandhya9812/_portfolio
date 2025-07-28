@@ -1,0 +1,272 @@
+{% include "header.html" %} 
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      padding: 0;
+      background-color: #000;
+      overflow-x: hidden;
+    }
+   .hero-section {
+    position: relative;
+    min-height: 100vh;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: linear-gradient(135deg, #3a7bd5, #00d2ff, #00f28d);
+    background-size: 300% 300%;
+    animation: animatedBG 15s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+
+    @keyframes animatedBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .blob, .bubble {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: 0;
+      animation: blobMove 20s infinite alternate;
+    }
+
+    .blob {
+      width: 400px;
+      height: 400px;
+      background: #ffffff22;
+    }
+
+    .bubble {
+      width: 100px;
+      height: 100px;
+      background: #fff3;
+      box-shadow: 0 0 25px #ffffffaa;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .blob-1 { top: -120px; left: -120px; }
+    .blob-2 { bottom: -120px; right: -120px; }
+    .bubble-1 { bottom: 20%; left: 10%; animation-delay: 2s; }
+    .bubble-2 { top: 25%; right: 15%; animation-delay: 1s; }
+    .bubble-3 { top: 60%; left: 40%; animation-delay: 3s; }
+
+    @keyframes blobMove {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(60px, 40px); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
+    .hero-card {
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      border-radius: 25px;
+      padding: 40px;
+      max-width: 900px;
+      width: 90%;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+      color: white;
+      margin-top: 60px;
+      animation: fadeIn 1.05s ease-in-out both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-card h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      animation: slideIn 1s ease-in-out both;
+    }
+
+    .hero-card h1 span {
+      color: #001122;
+      text-shadow: 2px 2px 4px #00000055;
+    }
+
+    @keyframes slideIn {
+      0% { transform: translateX(-100px); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    .hero-card p {
+      font-size: 1.2rem;
+      color: #eee;
+    }
+
+    .resume-btn {
+      margin-top: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow:
+        5px 5px 15px rgba(0, 0, 0, 0.3),
+        -5px -5px 15px rgba(255, 255, 255, 0.1),
+        inset 2px 2px 5px rgba(255, 255, 255, 0.2),
+        inset -2px -2px 5px rgba(0, 0, 0, 0.1);
+      color: #fff;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .resume-btn:hover {
+      transform: scale(1.1);
+      box-shadow:
+        0 0 15px 3px #0dcaf0,
+        inset 2px 2px 5px rgba(255, 255, 255, 0.2),
+        inset -2px -2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-img {
+      width: 220px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      animation: floatImg 5s ease-in-out infinite;
+    }
+
+    @keyframes floatImg {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .hero-card h1 { font-size: 2rem; }
+      .hero-img { width: 160px; margin-top: 20px; }
+    }
+
+    .contact-float-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 6px 6px 12px rgba(0,0,0,0.2), -6px -6px 12px rgba(255,255,255,0.1);
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      text-decoration: none;
+    }
+
+    .contact-float-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px 3px #0dcaf0;
+    }
+
+    .badge-count {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: red;
+      color: white;
+      font-size: 0.7rem;
+      border-radius: 50%;
+      padding: 3px 6px;
+    }
+    
+  </style>
+</head>
+
+<body>
+
+<section class="hero-section">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="bubble bubble-1"></div>
+  <div class="bubble bubble-2"></div>
+  <div class="bubble bubble-3"></div>
+
+  <div class="hero-card text-center text-lg-start d-lg-flex align-items-center justify-content-between">
+    <div class="text">
+      <h1>Hello, I'm <br><span>Sandhya Sharma</span></h1>
+      <p>Creative Full Stack Developer building beautiful, responsive & smart web apps.</p>
+
+      <!-- Resume Button -->
+     <a href="{% static 'resume.pdf' %}" target="_blank" title="View Resume">
+      <button type="button" class="resume-btn">
+        <i class="fas fa-file-alt"></i>
+      </button>
+     </a>
+
+    </div>
+  
+
+
+    <div class="mt-4 mt-lg-0 text-center text-lg-end">
+      <img src="{% static 'img/my.jpg' %}" alt="Profile" class="hero-img">
+    </div>
+  </div>
+</section>
+
+<!-- Resume Modal -->
+<div class="modal fade" id="resumeModal" tabindex="-1" aria-labelledby="resumeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="resumeModalLabel">My Resume</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="height: 85vh;">
+        <iframe src="{% static 'files/resume.pdf' %}" width="100%" height="100%" style="border: none;"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Contact Button -->
+<a href="{% url 'contact' %}" class="contact-float-btn" data-bs-toggle="tooltip" data-bs-placement="left" title="Contact Me">
+  <i class="fas fa-comment-dots"></i>
+  {% if messages %}
+    <span class="badge-count">{{ messages|length }}</span>
+  {% endif %}
+</a>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+  [...tooltipTriggerList].forEach(el => {
+    new bootstrap.Tooltip(el);
+  });
+</script>
+
+</body>
+</html>
+
+{% include "footer.html" %}

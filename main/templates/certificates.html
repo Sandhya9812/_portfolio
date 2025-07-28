@@ -1,0 +1,198 @@
+{% include "header.html" %} 
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Certificates</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Beautiful animated gradient background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(-45deg, #4e54c8, #8f94fb, #43cea2, #185a9d);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      z-index: -1;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 50px 20px;
+      position: relative;
+    }
+
+    h2.section-heading {
+      text-align: center;
+      color: #ffffff;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 40px;
+      text-shadow: 1px 1px 5px #00000050;
+    }
+
+    h3.category-heading {
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #fff;
+      padding-bottom: 5px;
+      text-shadow: 1px 1px 3px #00000070;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+    }
+
+    .certificate-card {
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      height: 340px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s;
+    }
+
+    .certificate-card:hover {
+      transform: scale(1.03);
+    }
+
+    .certificate-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      cursor: pointer;
+      background-color: #e2e8f0;
+    }
+
+    .card-body {
+      padding: 12px;
+      flex-grow: 1;
+      text-align: center;
+      color: #fff;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    .card-text {
+      font-size: 0.85rem;
+      color: #e0e0e0;
+    }
+
+    .card-footer {
+      text-align: center;
+      padding: 10px;
+      background: transparent;
+    }
+
+    .download-btn {
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      background-color: #ffffff;
+      color: #007bff;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .download-btn:hover {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    /* Modal image full screen */
+    .modal-content img {
+      width: 100%;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2 class="section-heading"><br>My Certificates</h2>
+
+    {% regroup certificates by category as grouped_certs %}
+    {% for group in grouped_certs %}
+      
+      <div class="card-container">
+        {% for cert in group.list %}
+        <div class="certificate-card">
+          {% if cert.image %}
+          <img src="{{ cert.image.url }}" alt="{{ cert.title }}" class="certificate-img" data-bs-toggle="modal" data-bs-target="#modal{{ cert.id }}">
+          {% else %}
+          <div class="certificate-img d-flex align-items-center justify-content-center text-muted">No Image</div>
+          {% endif %}
+
+          <div class="card-body">
+            <div class="card-title">{{ cert.title }}</div>
+            <div class="card-text">{{ cert.description }}</div>
+          </div>
+
+          <div class="card-footer">
+            {% if cert.pdf %}
+            <a href="{{ cert.pdf.url }}" download class="download-btn">
+              <i class="bi bi-download"></i> Download
+            </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Modal -->
+        {% if cert.image %}
+        <div class="modal fade" id="modal{{ cert.id }}" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <img src="{{ cert.image.url }}" alt="{{ cert.title }}">
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+{% include "footer.html" %}

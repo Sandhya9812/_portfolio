@@ -1,0 +1,57 @@
+<!-- Stylish Footer -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+  .footer-custom {
+  background: #0b0b0b;
+  border-top: 2px solid #00ffff;
+  box-shadow: 0 -2px 15px rgba(0, 255, 255, 0.3);
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.footer-name {
+  font-size: 1.6rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #00e0ff, #00ff6a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(0, 255, 200, 0.3);
+}
+
+.footer-text {
+  color: #ccc;
+  font-size: 1rem;
+}
+
+.footer-social a {
+  margin: 0 10px;
+  font-size: 1.3rem;
+  color: #00ffff;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.footer-social a:hover {
+  transform: scale(1.2);
+  color: #00ffcc;
+}
+
+.footer-copy {
+  font-size: 0.9rem;
+  color: #999;
+}
+</style>
+<footer class="footer-custom text-center text-light mt-5">
+  <div class="container py-5">
+    <h5 class="footer-name mb-3">Sandhya Sharma</h5>
+    <p class="footer-text mb-3">Full Stack Developer | Turning Ideas into Code</p>
+    
+    <div class="footer-social mb-4">
+      <a href="https://github.com/Sandhya9812" target="_blank"><i class="bi bi-github"></i></a>
+      <a href="https://www.linkedin.com/in/sandhya-sharma-94ab2a25a/" target="_blank"><i class="bi bi-linkedin"></i></a>
+      <a href="{% url 'contact' %}"><i class="bi bi-envelope-fill"></i></a>
+    </div>
+
+    <small class="footer-copy">&copy; {{ year|default:"2025" }} Sandhya Sharma. All rights reserved.</small>
+  </div>
+</footer>

@@ -1,0 +1,187 @@
+{% include "header.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Projects</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #2193b0, #6dd5ed, #cc2b5e, #753a88);
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s ease infinite;
+      z-index: -2;
+    }
+
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      padding: 60px 15px;
+    }
+
+    h2.section-heading {
+      text-align: center;
+      margin-bottom: 40px;
+      color: white;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .project-filter {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .project-card {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      overflow: hidden;
+      transition: all 0.4s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .project-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      padding: 15px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .project-body {
+      padding: 20px;
+      flex-grow: 1;
+      color: #fff;
+    }
+
+    .project-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .project-desc {
+      font-size: 0.95rem;
+      color: #e0e0e0;
+    }
+
+    .project-footer {
+      padding: 10px 20px 20px;
+      text-align: right;
+    }
+
+    .github-link {
+      font-size: 1.5rem;
+      color: #fff;
+      transition: color 0.3s;
+    }
+
+    .github-link:hover {
+      color: #ffd700;
+    }
+
+    @media (max-width: 575px) {
+      .project-card img {
+        height: 160px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2 class="section-heading">My Projects</h2>
+
+    <!-- Project Filter Buttons -->
+    <div class="project-filter text-center mb-5">
+      <button class="btn btn-outline-light active me-2 mb-2" data-filter="all">All</button>
+      <button class="btn btn-outline-light me-2 mb-2" data-filter="web">Web</button>
+      <button class="btn btn-outline-light me-2 mb-2" data-filter="frontend">Frontend</button>
+      <button class="btn btn-outline-light me-2 mb-2" data-filter="ai">AI & ML</button>
+      <button class="btn btn-outline-light me-2 mb-2" data-filter="mobile">Mobile</button>
+    </div>
+
+    <div class="project-grid" id="projectGrid">
+      {% for project in projects %}
+        <div class="project-card" data-category="{{ project.category }}">
+          {% if project.image %}
+            <img src="{{ project.image.url }}" alt="{{ project.title }}">
+          {% else %}
+            <img src="{% static 'core/img/default.png' %}" alt="Default Image">
+          {% endif %}
+          <div class="project-body">
+            <div class="project-title">{{ project.title }}</div>
+            <div class="project-desc">{{ project.description }}</div>
+          </div>
+          <div class="project-footer">
+            <a href="{{ project.github_url }}" target="_blank" class="github-link" title="Open on GitHub">
+              <i class="bi bi-box-arrow-up-right"></i>
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Project Filter Script -->
+  <script>
+    document.querySelectorAll('.project-filter button').forEach(btn => {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.project-filter button').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        const filter = this.getAttribute('data-filter');
+        const cards = document.querySelectorAll('.project-card');
+
+        cards.forEach(card => {
+          if (filter === 'all' || card.getAttribute('data-category') === filter) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
+{% include "footer.html" %}
